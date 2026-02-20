@@ -205,6 +205,28 @@ kr move UserService.kt com.example.services --project . --dry-run
 
 ---
 
+## AI & Editor Integration
+
+### Cursor
+Copy [`.cursor/rules/kotlin-renamer.mdc`](.cursor/rules/kotlin-renamer.mdc) into your Kotlin project's `.cursor/rules/` directory. Cursor will automatically attach it when you open any `.kt` file, instructing the AI to use `kr` instead of text replacement for any rename task.
+
+```bash
+# From your project root
+mkdir -p .cursor/rules
+curl -o .cursor/rules/kotlin-renamer.mdc \
+  https://raw.githubusercontent.com/umuterturk/kotlin-renamer/main/.cursor/rules/kotlin-renamer.mdc
+```
+
+### Claude / other agents
+Copy [`AGENTS.md`](AGENTS.md) into your project root. Claude Code and other agent frameworks pick it up automatically as a rules file.
+
+```bash
+curl -o AGENTS.md \
+  https://raw.githubusercontent.com/umuterturk/kotlin-renamer/main/AGENTS.md
+```
+
+---
+
 ## License
 
 MIT
