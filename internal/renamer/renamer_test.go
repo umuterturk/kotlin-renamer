@@ -192,6 +192,36 @@ func TestPropertyRename_Assignment(t *testing.T) {
 	assertCount(t, n, 1)
 }
 
+func TestPropertyRename_BareRead(t *testing.T) {
+	r := &PropertyRenamer{}
+	src := `fun apply() {
+    val d = comboDiscount
+    this.comboDiscount = d * 2
+    println(comboDiscount)
+    if (comboDiscount > 0) { }
+    comboDiscount = 0.0
+}`
+	got, n := r.Rename(src, "comboDiscount", "bundle")
+	assertContains(t, got, "val d = bundle")
+	assertContains(t, got, "this.bundle = d * 2")
+	assertContains(t, got, "println(bundle)")
+	assertContains(t, got, "if (bundle > 0)")
+	assertContains(t, got, "bundle = 0.0")
+	assertNotContains(t, got, "comboDiscount")
+	if n != 5 {
+		t.Errorf("expected 5 replacements, got %d", n)
+	}
+}
+
+func TestPropertyRename_DoesNotRenameMethodCall(t *testing.T) {
+	r := &PropertyRenamer{}
+	// comboDiscount() would be a method call — PropertyRenamer must leave it alone
+	src := `val x = comboDiscount()`
+	got, n := r.Rename(src, "comboDiscount", "bundle")
+	assertNotContains(t, got, "bundle()")
+	assertCount(t, n, 0)
+}
+
 // ─── Parameter Rename Tests ────────────────────────────────────────────────────
 
 func TestParameterRename_SignatureAndBody(t *testing.T) {

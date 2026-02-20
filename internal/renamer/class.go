@@ -163,6 +163,12 @@ func (r *PropertyRenamer) isPropertyContext(src string, start, end int) bool {
 		return true
 	}
 
+	// Bare read: not followed by ( — accept as property access in expression context
+	// e.g. val d = comboDiscount / println(comboDiscount) / if (comboDiscount > 0)
+	if len(post) == 0 || post[0] != '(' {
+		return true
+	}
+
 	return false
 }
 
