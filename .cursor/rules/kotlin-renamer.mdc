@@ -5,6 +5,24 @@ alwaysApply: false
 # kr — Kotlin Renamer
 **Always use `kr` for renaming in Kotlin files or for moving kotlin files to other packages.**
 `kr` uses word-boundary matching — renaming `User` never touches `UserService`.
+
+## Install
+Before using `kr`, check if it is available:
+```bash
+which kr
+```
+If missing, install it:
+```bash
+# macOS (Apple Silicon)
+curl -L https://github.com/umuterturk/kotlin-renamer/releases/latest/download/kr_darwin_arm64.tar.gz | tar xz && sudo mv kr /usr/local/bin/
+
+# macOS (Intel)
+curl -L https://github.com/umuterturk/kotlin-renamer/releases/latest/download/kr_darwin_amd64.tar.gz | tar xz && sudo mv kr /usr/local/bin/
+
+# Linux (amd64)
+curl -L https://github.com/umuterturk/kotlin-renamer/releases/latest/download/kr_linux_amd64.tar.gz | tar xz && sudo mv kr /usr/local/bin/
+```
+
 ## Capabilities
 | Type                             | What it renames                                               | Example                                                               |
 | -------------------------------- | ------------------------------------------------------------- | --------------------------------------------------------------------- |
@@ -13,6 +31,7 @@ alwaysApply: false
 | `property`                       | `val`/`var` declaration, `.prop` access, assignments          | `kr rename --type property userId accountId --file UserService.kt`    |
 | `parameter`                      | Signature + body only, never leaks outside the function       | `kr rename --type parameter userId accountId --file UserService.kt`   |
 | `move`                           | Package decl, all imports project-wide, file location on disk | `kr move UserService.kt com.example.services --project .`             |
+
 ## Examples
 ```bash
 # Rename a class everywhere
@@ -36,12 +55,15 @@ kr move UserService.kt com.example.services --project .
 # Move a file, preview only
 kr move UserService.kt com.example.services --project . --dry-run
 ```
+
 ## Rules
-1. **Prefer `--project` over `--file`** — catches all call sites.
-2. **Use `--file` for `parameter`** — parameters are single-file scope.
-3. **Use `--class` to narrow** when two classes share a method/property name.
-4. **Dry-run first**: append `--dry-run`, review, then run without it.
-5. **`kr move` always requires `--project`** — needs to scan all imports.
-6. **Don't mix `kr` with `sed`/`str_replace`** on the same symbol.
+1. **Check `which kr` before use** — install if missing (see above).
+2. **Prefer `--project` over `--file`** — catches all call sites.
+3. **Use `--file` for `parameter`** — parameters are single-file scope.
+4. **Use `--class` to narrow** when two classes share a method/property name.
+5. **Dry-run first**: append `--dry-run`, review, then run without it.
+6. **`kr move` always requires `--project`** — needs to scan all imports.
+7. **Don't mix `kr` with `sed`/`str_replace`** on the same symbol.
+
 ## Not supported
 - Local variable rename, Java files, renames inside string literals or comments.
