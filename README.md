@@ -207,18 +207,32 @@ kr move UserService.kt com.example.services --project . --dry-run
 
 ## AI & Editor Integration
 
-### Cursor
-Copy [`.cursor/rules/kotlin-renamer.mdc`](.cursor/rules/kotlin-renamer.mdc) into your Kotlin project's `.cursor/rules/` directory. Cursor will automatically attach it when you open any `.kt` file, instructing the AI to use `kr` instead of text replacement for any rename task.
+### Claude Code (VSCode / CLI)
+Claude Code reads `CLAUDE.md` from your project root automatically. Copy it in and Claude will use `kr` instead of text replacement for any rename task.
 
 ```bash
-# From your project root
+curl -o CLAUDE.md \
+  https://raw.githubusercontent.com/umuterturk/kotlin-renamer/main/CLAUDE.md
+```
+
+Or as a scoped rule (applied only when working on `.kt` files):
+```bash
+mkdir -p .claude/rules
+curl -o .claude/rules/kotlin-renamer.md \
+  https://raw.githubusercontent.com/umuterturk/kotlin-renamer/main/CLAUDE.md
+```
+
+### Cursor
+Copy [`.cursor/rules/kotlin-renamer.mdc`](.cursor/rules/kotlin-renamer.mdc) into your project's `.cursor/rules/` directory. Cursor attaches it automatically when you open any `.kt` file.
+
+```bash
 mkdir -p .cursor/rules
 curl -o .cursor/rules/kotlin-renamer.mdc \
   https://raw.githubusercontent.com/umuterturk/kotlin-renamer/main/.cursor/rules/kotlin-renamer.mdc
 ```
 
-### Claude / other agents
-Copy [`AGENTS.md`](AGENTS.md) into your project root. Claude Code and other agent frameworks pick it up automatically as a rules file.
+### Other agents (AGENTS.md)
+Some agent frameworks read `AGENTS.md` from the project root.
 
 ```bash
 curl -o AGENTS.md \
