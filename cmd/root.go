@@ -15,7 +15,8 @@ NOT affect UserService).
 
 Commands:
   rename    Rename a class, interface, object, method, property, or parameter
-  move      Move a .kt file to a new package, updating all imports`,
+  move      Move a .kt file to a new package, updating all imports
+  setup     Install AI editor integrations (Claude Code, Cursor)`,
 	SilenceUsage: true,
 }
 
@@ -32,4 +33,5 @@ func SetVersion(v string) {
 func init() {
 	rootCmd.AddCommand(renameCmd)
 	rootCmd.AddCommand(moveCmd)
+	rootCmd.AddCommand(setupCmd)
 }

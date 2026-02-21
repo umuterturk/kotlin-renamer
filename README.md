@@ -207,29 +207,47 @@ kr move UserService.kt com.example.services --project . --dry-run
 
 ## AI & Editor Integration
 
-### Claude Code (VSCode / CLI)
-Claude Code reads `CLAUDE.md` from your project root automatically. Copy it in and Claude will use `kr` instead of text replacement for any rename task.
+### Quick setup (recommended)
+
+After installing `kr`, run:
 
 ```bash
-curl -o CLAUDE.md \
-  https://raw.githubusercontent.com/umuterturk/kotlin-renamer/main/CLAUDE.md
+kr setup
 ```
 
-Or as a scoped rule (applied only when working on `.kt` files):
+This installs both integrations at once:
+- **Claude Code** skill → `~/.claude/skills/kr/SKILL.md` (global, all projects)
+- **Cursor** rule → `.cursor/rules/kotlin-renamer.mdc` (current project)
+
+You can install them individually with `kr setup --claude-code` or `kr setup --cursor`.
+
+### Claude Code (skill — no project config needed)
+
+The skill is installed globally. Claude Code will automatically use `kr` for any Kotlin rename or move task across all your projects. If `kr` is not on your PATH, Claude will offer to install it.
+
+<details>
+<summary>Manual install (without kr setup)</summary>
+
 ```bash
-mkdir -p .claude/rules
-curl -o .claude/rules/kotlin-renamer.md \
-  https://raw.githubusercontent.com/umuterturk/kotlin-renamer/main/CLAUDE.md
+mkdir -p ~/.claude/skills/kr
+curl -o ~/.claude/skills/kr/SKILL.md \
+  https://raw.githubusercontent.com/umuterturk/kotlin-renamer/main/skills/claude-code/SKILL.md
 ```
+</details>
 
 ### Cursor
-Copy [`.cursor/rules/kotlin-renamer.mdc`](.cursor/rules/kotlin-renamer.mdc) into your project's `.cursor/rules/` directory. Cursor attaches it automatically when you open any `.kt` file.
+
+The rule activates automatically when you open any `.kt` file.
+
+<details>
+<summary>Manual install (without kr setup)</summary>
 
 ```bash
 mkdir -p .cursor/rules
 curl -o .cursor/rules/kotlin-renamer.mdc \
-  https://raw.githubusercontent.com/umuterturk/kotlin-renamer/main/.cursor/rules/kotlin-renamer.mdc
+  https://raw.githubusercontent.com/umuterturk/kotlin-renamer/main/skills/cursor/kotlin-renamer.mdc
 ```
+</details>
 
 ### Other agents (AGENTS.md)
 Some agent frameworks read `AGENTS.md` from the project root.

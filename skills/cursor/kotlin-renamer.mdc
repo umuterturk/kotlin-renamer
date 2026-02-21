@@ -6,7 +6,7 @@ alwaysApply: false
 **Always use `kr` for renaming in Kotlin files or for moving kotlin files to other packages.**
 `kr` uses word-boundary matching — renaming `User` never touches `UserService`.
 
-> If `kr` is not installed, check https://github.com/umuterturk/kotlin-renamer/releases/latest to install.
+> If `kr` is not installed, run: `brew install umuterturk/tap/kr`
 
 ## Capabilities
 | Type                             | What it renames                                               | Example                                                               |
