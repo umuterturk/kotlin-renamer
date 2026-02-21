@@ -97,6 +97,13 @@ jobs:
             sudo mv kr /usr/local/bin/
             ```
 
+            ## AI Editor Integration
+
+            After installing, run `kr setup` to install Claude Code and Cursor integrations:
+            ```bash
+            kr setup
+            ```
+
             See [README](https://github.com/umuterturk/kotlin-renamer#readme) for full usage.
           files: dist/*
           draft: false
